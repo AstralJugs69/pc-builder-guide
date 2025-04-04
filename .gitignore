@@ -1,3 +1,25 @@
+# Node.js dependencies
 node_modules/
+
+# Environment variables
 .env
+
+# Log files
 *.log
+
+# Build directories
+build/
+dist/
+
+# MCP Servers (utility servers, not part of the project)
+mcp_servers/
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS generated files
+.DS_Store
+Thumbs.db

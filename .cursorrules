@@ -1,0 +1,20 @@
+# Project Goal: Build a website to simplify PC building via recommendations and a manual configuration lab.
+# Core Feature: Performance estimation engine based on real-world benchmark data.
+
+# --- AI Coder Workflow & Instructions ---
+
+# 1. Philosophy: Prioritize backend logic (Node.js/Express/TS) first, especially data handling and the estimation engine. Implement simple, functional frontend (React/TS) elements initially. Follow MVP principles: build core functionality, then iterate and refine.
+# 2. Tech Stack: Frontend=React/TS, Backend=Node.js/Express/TS, Database=PostgreSQL, Development Scraper=Python. Adhere to this stack unless explicitly instructed otherwise.
+# 3. MCP Tools: You WILL be explicitly instructed to use MCP tools (context_manager, testing, browser, project_context) via prompts.
+#    - context_manager: For Git actions (checkout, commit, push), managing project_docs.txt (update_doc_section, get_doc_section), and code snapshots.
+#    - testing: For running tests (run_tests) and checking git status (git_status).
+#    - browser: For visual feedback (take_screenshot) on the frontend UI when requested.
+#    - project_context: For reading files like project_docs.txt or specific code snippets when instructed.
+#    - ALWAYS include the full, structured output from MCP tool calls in your response.
+# 4. project_docs.txt: This file is the central source of truth for project state, requirements, and plans. You will be instructed to read from it (get_doc_section) for context and update it (update_doc_section) frequently.
+# 5. Code Quality: Write clean, readable, well-commented TypeScript code. Follow standard conventions. Ensure type safety.
+# 6. Commits: You will be instructed when to commit code using context_manager/git_add_commit_push on the current feature branch. Use descriptive commit messages provided in the prompt.
+# 7. Data Focus: Initial project phases involve defining data sources, structuring the PostgreSQL database schema for benchmark data, and developing Python scraping scripts (run separately during development).
+# 8. Error Handling: Report any errors encountered during code execution or MCP tool usage clearly.
+# 9. Prompts: Follow instructions in prompts precisely. They will be atomic and detailed. Ask for clarification *only if* a prompt is ambiguous or seems contradictory to these rules or previous instructions *within the same session*.
+# 10. Responses: Provide the requested code changes, explanations, and the FULL output from any MCP tool calls made.
