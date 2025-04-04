@@ -1,0 +1,82 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// Stores individual CPU models
+model Cpu {
+  cpuId           Int       @id @default(autoincrement()) @map("cpu_id")
+  modelName       String    @unique @map("model_name")
+  manufacturer    String?
+  coreCount       Int?      @map("core_count")
+  threadCount     Int?      @map("thread_count")
+  baseClockGhz    Decimal?  @db.Decimal(4, 2) @map("base_clock_ghz")
+  boostClockGhz   Decimal?  @db.Decimal(4, 2) @map("boost_clock_ghz")
+  socket          String?
+  createdAt       DateTime  @default(now()) @map("created_at")
+  updatedAt       DateTime  @updatedAt @map("updated_at")
+  benchmarks      Benchmark[] // Relation field
+
+  @@map("cpus") // Maps this model to the 'cpus' table
+}
+
+// Stores individual GPU models
+model Gpu {
+  gpuId           Int       @id @default(autoincrement()) @map("gpu_id")
+  modelName       String    @unique @map("model_name")
+  manufacturer    String?
+  memoryGb        Int?      @map("memory_gb")
+  memoryType      String?   @map("memory_type")
+  createdAt       DateTime  @default(now()) @map("created_at")
+  updatedAt       DateTime  @updatedAt @map("updated_at")
+  benchmarks      Benchmark[] // Relation field
+
+  @@map("gpus") // Maps this model to the 'gpus' table
+}
+
+// Stores game titles used in benchmarks
+model Game {
+  gameId          Int       @id @default(autoincrement()) @map("game_id")
+  title           String    @unique
+  releaseYear     Int?      @map("release_year")
+  createdAt       DateTime  @default(now()) @map("created_at")
+  updatedAt       DateTime  @updatedAt @map("updated_at")
+  benchmarks      Benchmark[] // Relation field
+
+  @@map("games") // Maps this model to the 'games' table
+}
+
+// Stores the actual benchmark results (CORE TABLE)
+model Benchmark {
+  benchmarkId     Int       @id @default(autoincrement()) @map("benchmark_id")
+  cpuId           Int?      // Foreign key (optional based on our initial plan)
+  gpuId           Int       // Foreign key (required)
+  gameId          Int       // Foreign key (required)
+  resolution      String
+  graphicsSettings String   @map("graphics_settings")
+  averageFps      Decimal   @db.Decimal(6, 2) @map("average_fps")
+  minimumFps      Decimal?  @db.Decimal(6, 2) @map("minimum_fps")
+  percentile1Fps  Decimal?  @db.Decimal(6, 2) @map("percentile_1_fps")
+  dataSourceUrl   String    @map("data_source_url")
+  scrapedAt       DateTime  @default(now()) @map("scraped_at")
+
+  // Relations
+  cpu             Cpu?      @relation(fields: [cpuId], references: [cpuId])
+  gpu             Gpu       @relation(fields: [gpuId], references: [gpuId])
+  game            Game      @relation(fields: [gameId], references: [gameId])
+
+  // Constraint to ensure data uniqueness per source point
+  // Mapping the SQL UNIQUE constraint concept - Prisma handles implicit index creation
+  @@unique([gpuId, gameId, resolution, graphicsSettings, dataSourceUrl, cpuId], map: "benchmarks_uniqueness_constraint")
+  @@map("benchmarks") // Maps this model to the 'benchmarks' table
+}

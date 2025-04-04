@@ -1,0 +1,124 @@
+# pc-builder-guide - Project Documentation
+
+# Project Specification Summary
+A website designed to simplify the PC building process for gamers. It offers guided recommendations (Budget/Quality paths) based on user needs and a "Build Labs" feature for manual configuration and performance estimation. The core goal is to provide accurate performance predictions based on real-world benchmark data.
+
+# Architecture Summary
+Monolithic backend API serving data and logic to a React frontend. PostgreSQL database stores component specs, compatibility rules, and benchmark data. Python scripts used offline during development to scrape and populate the database. Initial focus on backend data structures, scraping strategy, and the core estimation engine logic (v0.1).
+
+# Current Progress
+Project initialized. Root directory: pc-builder-guide. Project documentation created and populated. Backend directory structure created with Express.js/TypeScript setup. Backend has a simple health check endpoint at /api/v1/health. Prisma ORM integrated with PostgreSQL as the database provider. Database schema defined for CPUs, GPUs, Games, and Benchmarks. Initial migration successfully created and applied to the database. Created API endpoints for retrieving CPU and GPU lists at /api/v1/components/cpus and /api/v1/components/gpus.
+
+# Chat Summary
+Initial project definition complete. Agreed on project idea, goals, MVP features (Budget/Quality recs, Build Labs, v0.1 Perf Estimator), tech stack (React/TS, Node/TS, Postgres), minimalist UI, and backend-first approach. Discussed performance estimator logic, refining it to focus on CPU+GPU pairs with curated data initially (v0.1), iterating complexity later. Shifted immediate focus to data source definition, DB schema refinement, and initial scraping strategy.
+
+# Dev Notes
+Goals:
+1. Simplify PC building for users.
+2. Validate the concept as a potential source of income.
+3. Build a foundation for future scaling if the MVP is successful.
+4. Develop an accurate, data-driven performance estimation engine as the core feature.
+
+Audience/Platform:
+Target Audience: Gamers (beginners to enthusiasts).
+Platform: Web Browser (Desktop-first focus initially, responsive design later).
+
+MVP Features:
+1. Budget Recommendation: Simple form (FPS, Game), basic backend logic using v0.1 estimator, display components.
+2. Quality Recommendation: Simple form (Price Target, Use Case), basic backend logic using v0.1 estimator, display components.
+3. Build Labs: Manual selection (limited initial dataset), basic compatibility checks (e.g., socket), display selected list, display performance estimation using v0.1 engine.
+4. Performance Estimator (v0.1): Backend logic based initially on CPU+GPU pairings derived from curated benchmark data. Uses direct lookup first, then a simple tier-based approximation for missing data.
+5. Data Foundation: Defined DB schema for components & benchmarks; initial (offline) scraping process for populating DB with curated data.
+6. Basic UI: Minimalist, functional interface for accessing features.
+
+Tech Stack:
+- Frontend: React with TypeScript
+- Backend: Node.js with Express and TypeScript
+- Database: PostgreSQL
+- Web Scraping (Dev Tool): Python (e.g., BeautifulSoup/Requests or Scrapy)
+- Initial Styling: Plain CSS / CSS Modules (Minimalist)
+
+<!-- CARRY START -->
+## Current Goal:
+Implement backend API endpoints for PC components and benchmark data retrieval.
+
+## Key Context Points:
+* The database schema is defined and migrated
+* Basic CPU and GPU list endpoints are implemented
+* Need to expand API functionality with benchmark data endpoints
+* Future: Add data input routes for populating the database with scraped data
+<!-- CARRY END -->
+
+Goals:
+1. Simplify PC building for users.
+2. Validate the concept as a potential source of income.
+3. Build a foundation for future scaling if the MVP is successful.
+4. Develop an accurate, data-driven performance estimation engine as the core feature.
+
+Audience/Platform:
+Target Audience: Gamers (beginners to enthusiasts).
+Platform: Web Browser (Desktop-first focus initially, responsive design later).
+
+MVP Features:
+1. Budget Recommendation: Simple form (FPS, Game), basic backend logic using v0.1 estimator, display components.
+2. Quality Recommendation: Simple form (Price Target, Use Case), basic backend logic using v0.1 estimator, display components.
+3. Build Labs: Manual selection (limited initial dataset), basic compatibility checks (e.g., socket), display selected list, display performance estimation using v0.1 engine.
+4. Performance Estimator (v0.1): Backend logic based initially on CPU+GPU pairings derived from curated benchmark data. Uses direct lookup first, then a simple tier-based approximation for missing data.
+5. Data Foundation: Defined DB schema for components & benchmarks; initial (offline) scraping process for populating DB with curated data.
+6. Basic UI: Minimalist, functional interface for accessing features.
+
+Tech Stack:
+- Frontend: React with TypeScript
+- Backend: Node.js with Express and TypeScript
+- Database: PostgreSQL
+- Web Scraping (Dev Tool): Python (e.g., BeautifulSoup/Requests or Scrapy)
+- Initial Styling: Plain CSS / CSS Modules (Minimalist)
+
+DB Schema:
+Our database schema is designed to store PC components and benchmark data:
+
+1. **Cpu Model**:
+   - cpuId (PK)
+   - modelName (unique)
+   - manufacturer
+   - coreCount
+   - threadCount
+   - baseClockGhz
+   - boostClockGhz
+   - socket
+   - timestamps
+
+2. **Gpu Model**:
+   - gpuId (PK)
+   - modelName (unique)
+   - manufacturer
+   - memoryGb
+   - memoryType
+   - timestamps
+
+3. **Game**:
+   - gameId (PK)
+   - title (unique)
+   - releaseYear
+   - timestamps
+
+4. **Benchmark** (Core Table):
+   - benchmarkId (PK)
+   - cpuId (FK, optional)
+   - gpuId (FK, required)
+   - gameId (FK, required)
+   - resolution
+   - graphicsSettings
+   - averageFps
+   - minimumFps
+   - percentile1Fps
+   - dataSourceUrl
+   - scrapedAt
+   - uniqueness constraint across multiple fields
+
+API Endpoints:
+The following API endpoints have been implemented:
+
+1. `GET /api/v1/health` - Health check endpoint, returns server status and timestamp
+2. `GET /api/v1/components/cpus` - Retrieves all CPUs from the database
+3. `GET /api/v1/components/gpus` - Retrieves all GPUs from the database
