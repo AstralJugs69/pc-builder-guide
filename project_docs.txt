@@ -1,38 +1,46 @@
-# Chronicle - Project Documentation
+# PC Builder Guide - Project Documentation
 
 # Project Specification Summary
-Project: Chronicle - A retro terminal-styled portfolio website.
-Goal: Enhance the existing vanilla JS/CSS/HTML project by adding a build process, improving the CRT effect, updating content, cleaning code, and polishing the professional feel.
-Audience: Potential employers, collaborators, tech enthusiasts.
-Platform: Web (Desktop focus initially).
-Key Features (Existing): Theming, filtering, project grid view, modals, sound effects, CRT effect toggle, static data.
-Key Features (Planned): Build process (Vite/tsc+esbuild), Enhanced CRT effect, Real project content, Code cleanup, Professional polish.
-MVP Approach: Implement foundational build process first, then iterate on features/cleanup.
+Project: PC Builder Guide - A website to simplify PC building via recommendations and a manual configuration lab.
+Goal: Create a tool that helps users build PCs with accurate performance estimations based on real-world benchmark data.
+Audience: PC enthusiasts, gamers, professionals needing custom workstations, novice PC builders.
+Platform: Web (responsive design for desktop and mobile).
+Key Features: Performance estimation engine, component compatibility checker, parts recommendation system, manual configuration lab, benchmark data visualization.
+Tech Stack: Frontend=React/TS, Backend=Node.js/Express/TS, Database=PostgreSQL, Development Scraper=Python.
 
 # Architecture Summary
-Stack: Vanilla JS (ES Modules), CSS3 (Variables), HTML5. Plan to introduce TypeScript and a build tool (Vite preferred, or tsc+esbuild).
-Structure: Modular frontend code (js/, css/). Separate Node.js script for sound asset generation (`generate-sounds.js`).
-Data: Static data in `js/data.js`.
-State: Decentralized state via module variables (`filterState`, `graphState`), localStorage (preferences), and DOM classes.
-Rendering: Dynamic HTML via JS (`render.js`, `modal.js`), extensive use of `innerHTML`. Text effects via `js/text-fx.js`.
-Styling: CSS variables for themes, multiple effect/layout CSS files.
-Key Modules: render, filter, project-grid, modal, theme, audio, crt-effect, stats, data.
-Potential Issues: Data scalability, lack of tests, potential confusion between `graph.js` and `project-grid.js`.
+Frontend: React with TypeScript for type safety, modular component structure, responsive design with CSS modules or styled-components.
+Backend: Node.js with Express and TypeScript, RESTful API design, PostgreSQL database integration.
+Database: PostgreSQL for storing component specifications and benchmark data, structured for efficient querying.
+Development Tools: Python scraper for collecting benchmark data during development (not part of production).
+Core Modules: 
+- Data Layer: Database models, API integrations, data validation
+- Logic Layer: Performance estimation engine, compatibility checking algorithm
+- UI Layer: Component catalog, configuration builder, performance visualization
+Deployment: Containerized with Docker for consistent development and production environments.
 
 # Current Progress
-Date: April 5, 2025
-Status: Adopted existing 'Chronicle' project into workflow. Confirmed clean git status on 'master' branch. Initial project analysis complete. `project_docs.txt` and `.cursorrules` created.
-Next Step: Create `feature/setup-build-process` branch and begin setting up the build process (Vite preferred).
-Blocked By: N/A.
+Date: April 5, 2024
+Status: Initialized project setup with project_docs.txt. Project is in early planning stages. MCP server tools are operational.
+Next Step: Create initial project structure, define database schemas, and begin implementing the performance estimation engine.
+Blocked By: N/A
 
 # Chat Summary
 *(Summarize key decisions/context from recent chat)*
 
 # Dev Notes
-Build Tool Choice: Prefer Vite for its speed and DX, otherwise fallback to tsc + esbuild.
-TypeScript: Introduce gradually during refactoring or new feature implementation.
-Graph vs Grid: Investigate `graph.js` during code cleanup. Assume `project-grid.js` is the active component for now. Remove `graph.js` if unused.
-CRT Effect: Needs detailed CSS implementation based on User discussion (curvature, scanlines, zoom, bezel).
-Content: Replace placeholder projects in `data.js` with real 'web-droid' project details.
-Branching: Use feature branches (e.g., `feature/name`) off `master`. Merge back to `master` via PR (manual process).
-Testing: Need to introduce unit/integration tests after build setup.
+*(Any technical notes, TODOs, or reminders)*
+
+<!-- CARRY START -->
+## Current Goal:
+Set up the initial project structure for the PC Builder Guide, with a focus on the backend data models and the performance estimation engine.
+
+## Key Context Points:
+* Project is a website to simplify PC building via recommendations and a manual configuration lab
+* Core feature is a performance estimation engine based on real-world benchmark data
+* Tech stack: Frontend=React/TS, Backend=Node.js/Express/TS, Database=PostgreSQL
+* Initial focus should be on the backend logic, data handling, and the estimation engine
+* Follow MVP principles: build core functionality first, then iterate and refine
+* Data focus: Define data sources, structure PostgreSQL schema for benchmark data, develop Python scraping scripts
+
+<!-- CARRY END -->
